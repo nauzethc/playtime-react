@@ -1,14 +1,22 @@
+import { throttle } from 'lodash'
 import { useToggle } from '../hooks/toggle'
 import { useState, useRef, useEffect } from 'react'
 
-export default function TinyForm ({ initialValue = '' }) {
+export default function TinyForm ({ initialValue = '', onSubmit }) {
   const [search, setSearch] = useState(initialValue)
   const [collapsed, toggle] = useToggle(true)
   const inputElement = useRef(null)
 
-  const handleSubmit = e => {
-    e && e.preventDefault()
-  }
+  const handleSubmit = throttle(
+    e => {
+      e && e.preventDefault()
+      onSubmit && search && onSubmit({ search })
+    },
+    500,
+    {
+      trailing: true
+    }
+  )
 
   const handleInput = e => {
     setSearch(e.target.value)
@@ -26,6 +34,10 @@ export default function TinyForm ({ initialValue = '' }) {
       inputElement.current.focus()
     }
   }, [collapsed])
+  useEffect(() => {
+    const handler = setTimeout(handleSubmit, 500)
+    return () => clearTimeout(handler)
+  }, [search])
 
   return (
     <form
@@ -40,9 +52,9 @@ export default function TinyForm ({ initialValue = '' }) {
         onChange={handleInput}
         onKeyDown={handleKey}
       />
-      <button onClick={toggle}>
+      <button type='button' onClick={toggle}>
         <svg
-          className='w-6 h-6'
+          className='w-7 h-7'
           fill='currentColor'
           viewBox='0 0 20 20'
           xmlns='http://www.w3.org/2000/svg'

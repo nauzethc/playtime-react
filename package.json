@@ -9,11 +9,14 @@
     "lint": "standard --plugin react ./components/*.js ./pages/**/*.js ./hooks/*.js"
   },
   "dependencies": {
-    "howlongtobeat-api": "^1.0.2",
+    "chart.js": "^3.6.2",
+    "howlongtobeat-api": "^1.0.3",
     "lodash": "^4.17.21",
     "next": "latest",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-chartjs-2": "^4.0.0",
+    "react-dom": "^17.0.2",
+    "react-intersection-observer-hook": "^2.0.3"
   },
   "devDependencies": {
     "autoprefixer": "^10.2.6",

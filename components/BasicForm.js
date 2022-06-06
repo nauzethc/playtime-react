@@ -15,7 +15,7 @@ export default function BasicForm ({ className, initialQuery = '', onSubmit }) {
   )
 
   useEffect(() => {
-    const handler = setTimeout(handleSubmit, 300)
+    const handler = setTimeout(handleSubmit, 500)
     return () => clearTimeout(handler)
   }, [query.value])
 

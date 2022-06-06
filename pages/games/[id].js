@@ -1,7 +1,12 @@
 import { useGame } from '../../hooks/howlongtobeat'
 import { useToggle } from '../../hooks/toggle'
+import { useRouter } from 'next/router'
+
 import GameplayTable from '../../components/GameplayTable'
+import GameplayChart from '../../components/GameplayChart'
 import Spinner from '../../components/Spinner'
+import TinyForm from '../../components/TinyForm'
+import Portal from '../../components/Portal'
 
 function Developers ({ developers }) {
   return Array.isArray(developers) ? developers.join(', ') : 'Unknown developer'
@@ -43,17 +48,15 @@ function Stats ({ stats }) {
 function Genres ({ genres }) {
   return (
     <ul className='genres'>
-      {Array.isArray(genres)
-        ? (
-            genres.map(genre => (
-              <li key={genre} className='inline'>
-                {genre}
-              </li>
-            ))
-          )
-        : (
-          <li>Unknown developer</li>
-          )}
+      {Array.isArray(genres) ? (
+        genres.map(genre => (
+          <li key={genre} className='inline'>
+            {genre}
+          </li>
+        ))
+      ) : (
+        <li>Unknown developer</li>
+      )}
     </ul>
   )
 }
@@ -81,6 +84,7 @@ function Gameplays ({ gameplays }) {
             <GameplayTable data={gameplayData} type={gameplayType} />
           </div>
         ))}
+      {gameplays && <GameplayChart data={gameplays.platforms} />}
     </div>
   )
 }
@@ -97,35 +101,33 @@ function AdditionalData ({ summary }) {
         className='cursor-pointer rounded-full w-8 h-8 grid items-center justify-center absolute right-4 bottom-0 -mb-4 bg-gray-600 text-gray-200 hover:bg-purple-500 transition-colors'
         onClick={toggle}
       >
-        {collapsed
-          ? (
-            <svg
-              className='w-6 h-6'
-              fill='currentColor'
-              viewBox='0 0 20 20'
-              xmlns='http://www.w3.org/2000/svg'
-            >
-              <path
-                fillRule='evenodd'
-                d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'
-                clipRule='evenodd'
-              />
-            </svg>
-            )
-          : (
-            <svg
-              className='w-6 h-6'
-              fill='currentColor'
-              viewBox='0 0 20 20'
-              xmlns='http://www.w3.org/2000/svg'
-            >
-              <path
-                fillRule='evenodd'
-                d='M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z'
-                clipRule='evenodd'
-              />
-            </svg>
-            )}
+        {collapsed ? (
+          <svg
+            className='w-6 h-6'
+            fill='currentColor'
+            viewBox='0 0 20 20'
+            xmlns='http://www.w3.org/2000/svg'
+          >
+            <path
+              fillRule='evenodd'
+              d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'
+              clipRule='evenodd'
+            />
+          </svg>
+        ) : (
+          <svg
+            className='w-6 h-6'
+            fill='currentColor'
+            viewBox='0 0 20 20'
+            xmlns='http://www.w3.org/2000/svg'
+          >
+            <path
+              fillRule='evenodd'
+              d='M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z'
+              clipRule='evenodd'
+            />
+          </svg>
+        )}
       </button>
     </div>
   )
@@ -133,11 +135,18 @@ function AdditionalData ({ summary }) {
 
 function Game ({ id }) {
   const [state] = useGame(id)
+  const router = useRouter()
   const game = state.data || {}
   const { developers, stats, genres } = game
 
+  const initalValue = router.query.search || ''
+  const handleSubmit = query => router.push({ pathname: '/games', query })
+
   return (
     <div id='game-page' className='flex flex-col'>
+      <Portal target='#actions-container'>
+        <TinyForm onSubmit={handleSubmit} initialValue={initalValue} />
+      </Portal>
       <Spinner isLoading={state.pending} className='self-center my-4'>
         <div className='flex flex-col'>
           <div className='header flex flex-wrap px-4 py-8 gap-6 bg-gray-700'>
@@ -148,7 +157,7 @@ function Game ({ id }) {
                 className='cover block w-full rounded-lg'
               />
             </picture>
-            <div className='metadata flex flex-col gap-1'>
+            <div className='metadata flex flex-col gap-2'>
               <h2 className='title font-semibold text-2xl'>{game.name}</h2>
               <h3 className='developers font-light'>
                 <Developers developers={developers} />

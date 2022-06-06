@@ -1,26 +1,24 @@
 import 'tailwindcss/tailwind.css'
 import '../assets/styles.css'
 import Logo from '../components/Logo'
-import TinyForm from '../components/TinyForm'
 import { useRouter } from 'next/router'
 
 function MyApp ({ Component, pageProps }) {
   const router = useRouter()
   const isHome = router.pathname === '/'
-  const initalValue = router.query.search || ''
-  const handleSubmit = query => router.push({ pathname: '/games', query })
   return (
     <div id='app'>
-      {!isHome
-        ? (
-          <header className='justify-between'>
-            <Logo className='text-xl' />
-            <TinyForm onSubmit={handleSubmit} initialValue={initalValue} />
-          </header>
-          )
-        : (
-            ''
-          )}
+      {!isHome ? (
+        <header className='justify-between'>
+          <Logo className='text-xl' />
+          <div
+            id='actions-container'
+            className='flex items-center justify-end'
+          />
+        </header>
+      ) : (
+        ''
+      )}
       <main>
         <Component {...pageProps} />
       </main>
