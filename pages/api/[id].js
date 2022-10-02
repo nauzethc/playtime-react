@@ -1,8 +1,8 @@
-import { get } from 'howlongtobeat-api'
+import { getGameById } from '../../services/igdb'
 
 export default async function handler (req, res) {
   const { id } = req.query
-  const game = await get(id)
+  const game = await getGameById(id)
   if (game) {
     res.status(200).json(game)
   } else {

@@ -1,8 +1,7 @@
 /* global fetch */
-import { data } from 'autoprefixer'
-import { useEffect, useReducer } from 'react'
+import { useReducer } from 'react'
 
-function reducer (state, { type, payload, error }) {
+function reducer(state, { type, payload, error }) {
   switch (type) {
     case 'request':
       return { ...state, ...payload, pending: true }
@@ -15,34 +14,33 @@ function reducer (state, { type, payload, error }) {
   }
 }
 
-export function useGame (id) {
-  const [state, dispatch] = useReducer(reducer, {
+export function useGame(id, initialState = {}) {
+  const [state, dispatch] = useReducer(reducer, Object.assign({
     pending: false,
     error: null,
     data: null
-  })
+  }, initialState))
 
-  function refresh () {
+  function refresh() {
     dispatch({ type: 'request' })
     fetch(`/api/${id}`)
       .then(res => res.json())
       .then(data => dispatch({ type: 'success', payload: { data } }))
       .catch(error => dispatch({ type: 'error', error }))
   }
-  useEffect(() => refresh(), [id])
   return [state, refresh]
 }
 
-export function useSearch () {
+export function useSearch() {
   const [state, dispatch] = useReducer(reducer, {
     query: null,
     pending: false,
     error: null,
-    total: 0,
+    count: 0,
     data: []
   })
 
-  function search (query) {
+  function search(query) {
     dispatch({ type: 'request', payload: { query } })
     fetch('/api/search', {
       method: 'POST',
@@ -54,8 +52,8 @@ export function useSearch () {
         dispatch({
           type: 'success',
           payload:
-            query.page && query.page > 1
-              ? { data: [...state.data, ...payload.data] }
+            payload.pageCurrent && payload.pageCurrent > 1
+              ? { ...payload, data: [...state.data, ...payload.data] }
               : payload
         })
       )
