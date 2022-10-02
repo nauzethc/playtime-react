@@ -1,22 +1,25 @@
 import Link from 'next/link'
 import ProgressBar from './ProgressBar'
+import { toRelativeTime } from '../utils/time'
+
+const BASE_URL = process.env.HLTB_BASE_IMG_URL || 'https://howlongtobeat.com/games'
 
 function Gameplays ({
-  gameplayMain = 0,
-  gameplayExtended = 0,
-  gameplayCompletionist = 0,
-  gameplayMulti = 0
+  comp_main = 0,
+  comp_plus = 0,
+  comp_100 = 0,
+  invested_mp = 0
 }) {
   const max = Math.max.apply(null, [
-    gameplayMain,
-    gameplayExtended,
-    gameplayCompletionist,
-    gameplayMulti
+    comp_main,
+    comp_plus,
+    comp_100,
+    invested_mp
   ])
   const data = [
     {
       label: 'Main',
-      value: gameplayMain,
+      value: comp_main,
       icon: (
         <svg
           className='w-6 h-6'
@@ -30,7 +33,7 @@ function Gameplays ({
     },
     {
       label: 'Extended',
-      value: gameplayExtended,
+      value: comp_plus,
       icon: (
         <svg
           className='w-6 h-6'
@@ -49,7 +52,7 @@ function Gameplays ({
     },
     {
       label: 'Complete',
-      value: gameplayCompletionist,
+      value: comp_100,
       icon: (
         <svg
           className='w-6 h-6'
@@ -68,7 +71,7 @@ function Gameplays ({
     },
     {
       label: 'Multiplayer',
-      value: gameplayMulti,
+      value: invested_mp,
       icon: (
         <svg
           className='w-6 h-6'
@@ -85,7 +88,7 @@ function Gameplays ({
     .map(({ label, value, icon }) => ({
       label,
       icon,
-      value: value.toFixed(1),
+      value: toRelativeTime(value),
       percent: (value * 100) / max
     }))
   return (
@@ -110,14 +113,14 @@ export default function GameResult ({ data = {} }) {
   return (
     <div className='game-result'>
       <div className='media w-24 h-36 relative'>
-        <Link href={`/games/${data.id}`}>
-          <img className='cover' src={data.imageUrl} alt={data.name} />
+        <Link href={`/games/${data.game_id}`}>
+          <img className='cover' src={`${BASE_URL}/${data.game_image}`} alt={data.game_name} />
         </Link>
       </div>
       <div className='metadata'>
         <h3>
-          <Link href={`/games/${data.id}`}>
-            <a>{data.name}</a>
+          <Link href={`/games/${data.game_id}`}>
+            <a>{data.game_name}</a>
           </Link>
         </h3>
         <Gameplays {...data} />

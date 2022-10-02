@@ -10,7 +10,7 @@ function Results ({ data = [] }) {
   return (
     <div className='results grid sm:grid-cols-2'>
       {data.map(game => (
-        <GameResult key={game.id} data={game} />
+        <GameResult key={game.game_id} data={game} />
       ))}
     </div>
   )
@@ -30,7 +30,7 @@ function Search (urlParams) {
   // On interesect
   useEffect(() => {
     if (isVisible) {
-      if (state.data.length < state.total) {
+      if (state.data.length < state.count) {
         setQuery({ ...query, page: (query.page || 1) + 1 })
       }
     }
