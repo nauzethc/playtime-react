@@ -8,17 +8,18 @@ function MyApp ({ Component, pageProps }) {
   const isHome = router.pathname === '/'
   return (
     <div id='app'>
-      {!isHome ? (
-        <header className='justify-between'>
-          <Logo className='text-xl' />
-          <div
-            id='actions-container'
-            className='flex items-center justify-end'
-          />
+      {!isHome
+        ? <header>
+          <div className="flex items-center justify-between">
+            <Logo className='text-xl' />
+            <div
+              id='actions-container'
+              className='flex items-center justify-end'
+            />
+          </div>
         </header>
-      ) : (
-        ''
-      )}
+        : null
+      }
       <main>
         <Component {...pageProps} />
       </main>

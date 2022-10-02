@@ -9,7 +9,7 @@ export default function Home () {
   return (
     <div
       id='home-page'
-      className='h-full container px-8 flex flex-col items-center justify-center'
+      className='h-full container px-8 flex flex-col items-center justify-center mx-auto'
     >
       <Logo />
       <a className='text-xs text-gray-600' href='https://howlongtobeat.com'>
