@@ -6,11 +6,11 @@ const http = axios.create({
   baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
-    'Referer': BASE_URL,
+    Referer: BASE_URL
   }
 })
 
-export function findGames({
+export function findGames ({
   search = '',
   platform = '',
   sortBy = 'popular',
@@ -46,6 +46,6 @@ export function findGames({
     .then(res => res.data)
 }
 
-export function getGameById(gameId) {
+export function getGameById (gameId) {
   return http.get(`/api/game/${gameId}`).then(res => res.data.data)
 }
