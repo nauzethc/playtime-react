@@ -5,8 +5,8 @@ export default function Logo ({ className }) {
     <div className={`logo ${className || ''}`}>
       <Link href="/">
         <a alt="PlayTime">
-          <span className="text-purple-500">Play</span>
-          <span className="font-bold">Time</span>
+          <span className="font-extralight text-purple-500">Play</span>
+          <span className="font-semibold">Time</span>
         </a>
       </Link>
     </div>
