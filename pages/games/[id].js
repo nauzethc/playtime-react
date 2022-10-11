@@ -1,11 +1,11 @@
 import { getGameById } from '../../services/igdb'
-import { useGame } from '../../hooks/howlongtobeat'
 import { useToggle } from '../../hooks/toggle'
 import { useRouter } from 'next/router'
 
 import GameplayTable from '../../components/GameplayTable'
 import TinyForm from '../../components/TinyForm'
 import Portal from '../../components/Portal'
+import Error from '../../components/Error'
 
 const BASE_URL = process.env.HLTB_BASE_IMG_URL || 'https://howlongtobeat.com/games'
 
@@ -82,13 +82,12 @@ function AdditionalData ({ summary }) {
 }
 
 export default function Game ({ id, data, error }) {
-  const [state] = useGame(id, { data, error })
   const router = useRouter()
   const initalValue = router.query.search || ''
   const handleSubmit = query => router.push({ pathname: '/games', query })
 
-  const game = state.data ? state.data.game[0] || {} : {}
-  const platforms = state.data ? state.data.platformData : []
+  const game = data ? data.game[0] || {} : {}
+  const platforms = data ? data.platformData : []
 
   return (
     <div id='game-page' className='flex flex-col'>
@@ -96,6 +95,7 @@ export default function Game ({ id, data, error }) {
         <TinyForm onSubmit={handleSubmit} initialValue={initalValue} />
       </Portal>
       <div className='flex flex-col'>
+        <Error error={error} />
         <div className='header flex flex-wrap px-4 py-8 gap-6 bg-gray-700'>
           <picture className='media flex-shrink-0'>
             <img
@@ -140,19 +140,19 @@ export const getServerSideProps = async ({ query }) => {
   try {
     const data = await getGameById(id)
     return {
-      props: {
+      props: JSON.parse(JSON.stringify({
         id,
         data,
         error: null
-      }
+      }))
     }
   } catch (error) {
     return {
-      props: {
+      props: JSON.parse(JSON.stringify({
         id,
         data: null,
         error
-      }
+      }))
     }
   }
 }

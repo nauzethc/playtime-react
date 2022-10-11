@@ -5,6 +5,7 @@ import { useSearch } from '../../hooks/howlongtobeat'
 import { useRouter } from 'next/router'
 import { useIntersectionObserver } from 'react-intersection-observer-hook'
 import { useEffect, useState } from 'react'
+import Error from '../../components/Error'
 
 function Results ({ data = [] }) {
   return (
@@ -43,6 +44,7 @@ function Search (urlParams) {
   return (
     <div id='search-page' className='flex flex-col'>
       <AdvancedForm onSubmit={handleSubmit} initialData={query} />
+      <Error error={state.error} />
       <Results data={state.data} />
       <Spinner isLoading={state.pending} className='self-center my-4'>
         <span ref={ref} />
