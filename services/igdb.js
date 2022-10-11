@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 const BASE_URL = process.env.HLTB_BASE_URL || 'https://howlongtobeat.com'
+const BUILD_HASH = process.env.HTLB_BUILD_HASH || '997y1kqsFF5nE6UNFcl8z'
 
 const http = axios.create({
   baseURL: BASE_URL,
@@ -47,5 +48,7 @@ export function findGames ({
 }
 
 export function getGameById (gameId) {
-  return http.get(`/api/game/${gameId}`).then(res => res.data.data)
+  return http
+    .get(`/_next/data/${BUILD_HASH}/game/${gameId}.json`)
+    .then(res => res.data.pageProps.game.data)
 }
