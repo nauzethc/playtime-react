@@ -2,19 +2,18 @@
 
 HowLongToBeat.com clone made with React and [Next.js](https://nextjs.org/)
 
-
 ### Features
 
-* Mobile-first and responsive UX
-* [howlongtobeat-api](https://github.com/nauzethc/howlongtobeat-api) to retrieve games data from HowLongToBeat.com (scrapping)
-* Charts with [Chart.js](https://www.chartjs.org/) and [react-chartjs-2](https://react-chartjs-2.js.org/) plugin
+- Mobile-first and responsive UX
+- Stand-alone app (Service Worker)
+- Retrieve games data from HowLongToBeat.com (scrapping)
 
+### Dependencies
 
-### External resources
-
-* Icons from [heroicons.dev](https://github.com/zaydek/heroicons.dev)
-* Colors from [TailwindCSS](https://tailwindcss.com/)
-
+- [Next.js](https://nextjs.org)
+- [next-pwa](https://github.com/shadowwalker/next-pwa)
+- [heroicons](https://heroicons.com/)
+- [TailwindCSS](https://tailwindcss.com/)
 
 ## Run
 
@@ -22,4 +21,5 @@ HowLongToBeat.com clone made with React and [Next.js](https://nextjs.org/)
 npm install
 npm run dev
 ```
+
 Then go to http://localhost:3000/
