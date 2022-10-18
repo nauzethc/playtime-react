@@ -1,7 +1,7 @@
 /* global fetch */
 import { useReducer } from 'react'
 
-function reducer(state, { type, payload, error }) {
+function reducer (state, { type, payload, error }) {
   switch (type) {
     case 'request':
       return { ...state, ...payload, pending: true }
@@ -14,14 +14,14 @@ function reducer(state, { type, payload, error }) {
   }
 }
 
-export function useGame(id, initialState = {}) {
+export function useGame (id, initialState = {}) {
   const [state, dispatch] = useReducer(reducer, Object.assign({
     pending: false,
     error: null,
     data: null
   }, initialState))
 
-  function refresh() {
+  function refresh () {
     dispatch({ type: 'request' })
     fetch(`/api/${id}`)
       .then(res => res.json())
@@ -31,7 +31,7 @@ export function useGame(id, initialState = {}) {
   return [state, refresh]
 }
 
-export function useSearch() {
+export function useSearch () {
   const [state, dispatch] = useReducer(reducer, {
     query: null,
     pending: false,
@@ -40,7 +40,7 @@ export function useSearch() {
     data: []
   })
 
-  function search(query) {
+  function search (query) {
     dispatch({ type: 'request', payload: { query } })
     fetch('/api/search', {
       method: 'POST',
