@@ -28,6 +28,12 @@ hr {
   @apply hidden;
 }
 
+.cover[data-nimg="fill"] {
+  height: initial !important;
+  min-height: initial !important;
+  position: relative !important;
+}
+
 /*
  * Layout
  */
@@ -117,9 +123,6 @@ form .field {
 /*
  * Game page
  */
-#game-page .media {
-  max-width: 5em;
-}
 
 #game-page .metadata {
   min-width: 30%;
@@ -391,10 +394,6 @@ form .field {
 
 .game-result .media {
   @apply flex-shrink-0;
-}
-
-.game-result .media .cover {
-  @apply rounded-lg;
 }
 
 .game-result .metadata {

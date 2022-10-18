@@ -2,6 +2,7 @@ import { getGameById } from '../../services/igdb'
 import { useToggle } from '../../hooks/toggle'
 import { useRouter } from 'next/router'
 
+import Image from 'next/image'
 import GameplayTable from '../../components/GameplayTable'
 import TinyForm from '../../components/TinyForm'
 import Portal from '../../components/Portal'
@@ -97,13 +98,13 @@ export default function Game ({ id, data, error }) {
       <div className='flex flex-col'>
         <Error error={error} />
         <div className='header flex flex-wrap px-4 py-8 gap-6 bg-gray-700'>
-          <picture className='media flex-shrink-0'>
-            <img
-              src={`${BASE_URL}/${game.game_image}`}
-              alt={game.game_name}
-              className='cover block w-full rounded-lg'
-            />
-          </picture>
+          <figure className='w-36 h-48 flex-shrink-0 relative'>
+            <Image
+              className='cover rounded-lg'
+              src={`${BASE_URL}/${game.game_image}?width=200`}
+              layout="fill"
+              alt={data.game_name} />
+          </figure>
           <div className='metadata flex flex-col gap-2'>
             <h2 className='title font-semibold text-2xl'>{game.game_name}</h2>
             <h3 className='developers font-light'>{game.profile_dev}</h3>

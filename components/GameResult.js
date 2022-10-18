@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import ProgressBar from './ProgressBar'
 import { toRelativeTime } from '../utils/time'
+import Image from 'next/image'
 
 const BASE_URL = process.env.HLTB_BASE_IMG_URL || 'https://howlongtobeat.com/games'
 
@@ -112,11 +113,15 @@ function Gameplays ({
 export default function GameResult ({ data = {} }) {
   return (
     <div className='game-result'>
-      <div className='media w-24 h-36 relative'>
-        <Link href={`/games/${data.game_id}`}>
-          <img className='cover' src={`${BASE_URL}/${data.game_image}`} alt={data.game_name} />
-        </Link>
-      </div>
+      <Link href={`/games/${data.game_id}`}>
+        <a className="media w-24 relative">
+          <Image
+            className='cover rounded'
+            src={`${BASE_URL}/${data.game_image}?width=100`}
+            layout="fill"
+            alt={data.game_name} />
+        </a>
+      </Link>
       <div className='metadata'>
         <h3>
           <Link href={`/games/${data.game_id}`}>
