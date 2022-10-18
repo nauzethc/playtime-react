@@ -5,6 +5,7 @@
     "standard"
   ],
   "rules": {
-    "camelcase": "warn"
+    "camelcase": "off",
+    "react-hooks/exhaustive-deps": "off"
   }
 }
