@@ -1,14 +1,11 @@
 import { useEffect } from 'react'
-import { Platform, Genre, SortBy } from 'howlongtobeat-api'
+import { PLATFORM_VALUES, GENRE_VALUES, SORT_BY_PAIRS } from '../config/forms'
 import { useForm } from '../hooks/forms'
 import { useToggle } from '../hooks/toggle'
 
-const SORTBY_PAIRS = Object.entries(SortBy)
-const PLATFORM_VALUES = Object.values(Platform)
-const GENRE_VALUES = Object.values(Genre)
 const DEFAULTS = {
   search: '',
-  sortBy: '',
+  sortBy: 'popular',
   platform: '',
   genre: ''
 }
@@ -66,34 +63,30 @@ export default function AdvancedForm ({
           }
         </button>
       </div>
-      <fieldset className={`${collapsed ? 'hidden' : 'grid'} grid-cols-1 sm:grid-cols-3 gap-4 px-4 py-3 bg-gray-900`}>
+      <fieldset className={`${collapsed ? 'hidden' : 'grid'} grid-cols-1 sm:grid-cols-3 gap-4 p-4 bg-gray-900`}>
         <div className='field'>
           <label htmlFor='sortBy'>Sort by</label>
           <select name='sortBy' value={form.sortBy} onChange={handleChange}>
-            {SORTBY_PAIRS.map(([key, value]) => (
-              <option key={value} value={value}>
-                {key || 'All'}
-              </option>
+            {SORT_BY_PAIRS.map(({ label, value }) => (
+              <option key={value} value={value}>{label}</option>
             ))}
           </select>
         </div>
         <div className='field'>
           <label htmlFor='platform'>Platform</label>
           <select name='platform' value={form.platform} onChange={handleChange}>
+            <option value="">Any</option>
             {PLATFORM_VALUES.map(platform => (
-              <option key={platform} value={platform}>
-                {platform || 'All'}
-              </option>
+              <option key={platform}>{platform}</option>
             ))}
           </select>
         </div>
         <div className='field'>
           <label htmlFor='genre'>Genre</label>
           <select name='genre' value={form.genre} onChange={handleChange}>
+            <option value="">Any</option>
             {GENRE_VALUES.map(genre => (
-              <option key={genre} value={genre}>
-                {genre || 'All'}
-              </option>
+              <option key={genre}>{genre}</option>
             ))}
           </select>
         </div>
