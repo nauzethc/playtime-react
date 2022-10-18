@@ -12,7 +12,7 @@ export default function TinyForm ({ initialValue = '', onSubmit }) {
       e && e.preventDefault()
       onSubmit && search && onSubmit({ search })
     },
-    500,
+    1000,
     {
       trailing: true
     }

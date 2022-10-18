@@ -10,7 +10,7 @@ export default function BasicForm ({ className, initialQuery = '', onSubmit }) {
       e && e.preventDefault()
       onSubmit && query.value && onSubmit({ search: query.value })
     },
-    500,
+    1000,
     { trailing: true }
   )
 
