@@ -49,7 +49,7 @@ function MyApp ({ Component, pageProps }) {
       </Head>
       {!isHome
         ? <header>
-          <div className="flex items-center justify-between">
+          <div className="w-full flex items-center justify-between">
             <Logo className="text-xl" />
             <div id="actions-container" className="flex items-center justify-end" />
           </div>
