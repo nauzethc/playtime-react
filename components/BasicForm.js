@@ -29,6 +29,7 @@ export default function BasicForm ({ className, initialQuery = '', onSubmit }) {
         type='text'
         name='query'
         placeholder='Search...'
+        autoComplete='off'
         {...query}
       />
       <svg
